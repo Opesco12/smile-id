@@ -146,9 +146,9 @@ app.post("/callback", async (req, res) => {
   }
 });
 
-app.get("/status/:jobId", async (req, res) => {
+app.post("/status", async (req, res) => {
   try {
-    // const { jobId } = req.params;
+    const { jobId, userId } = req.params;
 
     // console.log("Job id gotten bacl: ", jobId);
     // const result = await getVerificationResult(jobId);
@@ -165,8 +165,8 @@ app.get("/status/:jobId", async (req, res) => {
         partner_id: PARTNER_ID,
         timestamp,
         signature,
-        user_id: "user-1747845452419",
-        job_id: "job-1747845452428",
+        user_id: userId,
+        job_id: jobId,
         image_links: false,
         history: false,
       },
@@ -236,4 +236,6 @@ app.get("/job-id/:userId", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+// app.listen(3000, () => console.log("Server running on port 3000"));
+
+module.exports = app;
