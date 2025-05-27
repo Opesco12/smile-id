@@ -150,7 +150,9 @@ app.post("/callback", async (req, res) => {
 
 app.post("/status", async (req, res) => {
   try {
-    const { jobId, userId } = req.body.data;
+    const data = req.body;
+
+    console.log("data from trying to see: ", data);
 
     // console.log("Job id gotten bacl: ", jobId);
     // const result = await getVerificationResult(jobId);
@@ -167,8 +169,8 @@ app.post("/status", async (req, res) => {
         partner_id: PARTNER_ID,
         timestamp,
         signature,
-        user_id: userId,
-        job_id: jobId,
+        user_id: data?.userId,
+        job_id: data?.jobId,
         image_links: false,
         history: false,
       },
