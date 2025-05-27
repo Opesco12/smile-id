@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 const { Signature, WebApi } = require("smile-identity-core");
 const smileIdentityCore = require("smile-identity-core");
 const Utilities = smileIdentityCore.Utilities;
@@ -8,6 +9,7 @@ const Utilities = smileIdentityCore.Utilities;
 const app = express();
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 const PARTNER_ID = "6329";
@@ -148,7 +150,7 @@ app.post("/callback", async (req, res) => {
 
 app.post("/status", async (req, res) => {
   try {
-    const { jobId, userId } = req.params;
+    const { jobId, userId } = req.body.data;
 
     // console.log("Job id gotten bacl: ", jobId);
     // const result = await getVerificationResult(jobId);
@@ -181,12 +183,12 @@ app.post("/status", async (req, res) => {
     const { result_code, result_text } = responseData;
     console.log("New Response from job status: ", response.data);
 
-    await saveVerificationResult({
-      job_id: "job-1747845452428",
-      result_code,
-      result_text,
-      timestamp: new Date().toISOString(),
-    });
+    // await saveVerificationResult({
+    //   job_id: "job-1747845452428",
+    //   result_code,
+    //   result_text,
+    //   timestamp: new Date().toISOString(),
+    // });
 
     res.json(responseData);
   } catch (error) {
